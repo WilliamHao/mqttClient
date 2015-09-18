@@ -1,6 +1,8 @@
 package com.williamhao.mqttclient.IM;
 
+import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
@@ -10,11 +12,14 @@ import android.os.IBinder;
 public class IMClient {
 
     private IMService.IMBinder imBinder;
+    private static IMClient mIMClient;
+    private Context mContext;
 
     private ServiceConnection connection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            imBinder = null;
         }
 
         @Override
@@ -22,4 +27,17 @@ public class IMClient {
             imBinder = (IMService.IMBinder) service;
         }
     };
+
+    public static IMClient getInstance(){
+        if(null == mIMClient){
+            mIMClient = new IMClient();
+        }
+
+        return mIMClient;
+    }
+
+    public void setContext(Activity activity){
+        mContext = activity;
+    }
+
 }

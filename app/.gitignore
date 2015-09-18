@@ -1,4 +1,4 @@
 /build
-/src/androidTest
+/src/androidTest/java/com/williamhao/mqttclient
 /src/main/res
 /src/main/java/com/williamhao/mqttclient/DuFrame
