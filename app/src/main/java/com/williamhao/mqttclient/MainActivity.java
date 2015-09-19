@@ -44,7 +44,6 @@ public class MainActivity extends BaseActivity{
     }
 
     public void bind(){
-
         IMClient.getInstance().bindService();
     }
 

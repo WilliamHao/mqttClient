@@ -23,13 +23,13 @@ public class IMClient {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             imBinder = null;
-            LogUtils.d("disconnect");
+            LogUtils.d("---disconnect---");
         }
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             imBinder = (IMService.IMBinder) service;
-            LogUtils.d("connect");
+            LogUtils.d("---connected---");
         }
     };
 
@@ -57,6 +57,12 @@ public class IMClient {
     public void unbindService(){
         if(null != mContext){
             mContext.unbindService(connection);
+        }
+    }
+
+    public void setListener(MqttListener listener){
+        if(null != imBinder){
+            imBinder.setListener(listener);
         }
     }
 }
