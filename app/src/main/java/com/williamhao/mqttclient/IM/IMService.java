@@ -17,29 +17,36 @@ public class IMService extends Service{
     @Override
     public void onCreate(){
         super.onCreate();
-        LogUtils.d("onCreate");
+        LogUtils.d("service onCreate");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        LogUtils.d("onStartCommand");
+        LogUtils.d("service onStartCommand");
         return super.onStartCommand(intent, flags, startId);
     }
 
     public IBinder onBind(Intent intent){
+        LogUtils.d("service onBind");
         return mIBinder;
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        LogUtils.d("onDestroy");
+        LogUtils.d("service onDestroy");
     }
 
     @Override
     public boolean onUnbind(Intent intent){
-        LogUtils.d("onUnbind");
+        LogUtils.d("service onUnbind");
         return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onRebind(Intent intent){
+        LogUtils.d("service onRebind");
+        super.onRebind(intent);
     }
 
     public class IMBinder extends Binder {

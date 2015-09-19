@@ -3,8 +3,11 @@ package com.williamhao.mqttclient.IM;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+
+import com.williamhao.mqttclient.DuFrame.utils.LogUtils;
 
 /**
  * Created by WilliamHao on 15/9/18.
@@ -20,11 +23,13 @@ public class IMClient {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             imBinder = null;
+            LogUtils.d("disconnect");
         }
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             imBinder = (IMService.IMBinder) service;
+            LogUtils.d("connect");
         }
     };
 
@@ -40,4 +45,18 @@ public class IMClient {
         mContext = activity;
     }
 
+
+    public void bindService(){
+        if(null != mContext) {
+            Intent intent = new Intent(mContext, IMService.class);
+            //mContext.startService(intent);
+            mContext.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    public void unbindService(){
+        if(null != mContext){
+            mContext.unbindService(connection);
+        }
+    }
 }
