@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.williamhao.mqttclient" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许应用打开网络套接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 允许应用访问网络上的信息 -->
@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,7 +37,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,8 +45,12 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".IM.IMService"/>
+        <service android:name=".IM.IMService" />
+
+        <activity
+            android:name=".SecondActivity"
+            android:label="@string/title_activity_second" >
+        </activity>
     </application>
 
 </manifest>

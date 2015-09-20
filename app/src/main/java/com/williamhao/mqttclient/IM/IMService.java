@@ -23,7 +23,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class IMService extends Service {
 
-    private static final String broker = "";
+    private static final String broker = "tcp://120.25.64.112:1883";
     private static final int qos = 1;
     private static final int keepAlive = 5;
     private IMBinder mIBinder = new IMBinder();
@@ -59,20 +59,14 @@ public class IMService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        disConnect();
         LogUtils.d("service onDestroy");
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         LogUtils.d("service onUnbind");
-        if(null != client){
-            try {
-                client.disconnect();
-                LogUtils.d("MQTT disconnect");
-            }catch(MqttException e){
-                e.printStackTrace();
-            }
-        }
+        disConnect();
         return true;
     }
 
@@ -84,6 +78,7 @@ public class IMService extends Service {
 
     public synchronized void connect() {
         //TODO 先检查网络状态
+        LogUtils.d(isConnect+"");
         if (!isConnect) {
 
             try {
@@ -98,6 +93,7 @@ public class IMService extends Service {
                 client.setCallback(new MqttCallback() {
                     @Override
                     public void connectionLost(Throwable throwable) {
+                        throwable.printStackTrace();
                         LogUtils.d("MQTT Connection lost, reconnecting...");
                         isConnect = false;
                         connect();
@@ -136,10 +132,32 @@ public class IMService extends Service {
         }
     }
 
+    private void disConnect(){
+        LogUtils.d(">>"+(null == client)+">>>"+isConnect);
+        if(null != client && isConnect){
+            try {
+                client.disconnect();
+                isConnect = false;
+                LogUtils.d("MQTT disconnect");
+            }catch(MqttException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public class IMBinder extends Binder {
 
         public void setListener(MqttListener listener) {
             mqttListener = listener;
         }
+
+        public void dis(){
+            disConnect();
+        }
+
+        public void con(){
+            connect();
+        }
+
     }
 }

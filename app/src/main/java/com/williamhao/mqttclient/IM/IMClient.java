@@ -14,7 +14,7 @@ import com.williamhao.mqttclient.DuFrame.utils.LogUtils;
  */
 public class IMClient {
 
-    private IMService.IMBinder imBinder;
+    private IMService.IMBinder imBinder = null;
     private static IMClient mIMClient;
     private Context mContext;
 
@@ -64,5 +64,9 @@ public class IMClient {
         if(null != imBinder){
             imBinder.setListener(listener);
         }
+    }
+
+    public IMService.IMBinder getImBinder(){
+        return imBinder;
     }
 }

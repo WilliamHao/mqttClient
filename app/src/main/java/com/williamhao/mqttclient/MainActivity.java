@@ -20,6 +20,8 @@ public class MainActivity extends BaseActivity{
         aq = new AQuery(this);
         aq.id(R.id.btn_bindService).clicked(this,"bind");
         aq.id(R.id.btn_unbindService).clicked(this, "unbind");
+        aq.id(R.id.btn_second).clicked(this, "aq_second");
+        aq.id(R.id.btn_disconnect).clicked(this,"aq_dis");
 
         IMClient.getInstance().setContext(this);
         LogUtils.d("activity onCreate");
@@ -49,5 +51,13 @@ public class MainActivity extends BaseActivity{
 
     public void unbind(){
         IMClient.getInstance().unbindService();
+    }
+
+    public void aq_second(){
+        redirectToActivity(this, SecondActivity.class);
+    }
+
+    public void aq_dis(){
+        IMClient.getInstance().getImBinder().dis();
     }
 }
